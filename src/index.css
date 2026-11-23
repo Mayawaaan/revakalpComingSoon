@@ -1,1 +1,252 @@
 @import "tailwindcss";
+
+@theme {
+  --font-serif: 'EB Garamond', Georgia, serif;
+  --font-sans: 'Inter', Arial, sans-serif;
+}
+
+/* REVAKALP website branding — official aesthetic tokens */
+:root {
+  --revakalp-burgundy: #38131E;
+  --revakalp-burgundy-deep: #2B0E17;
+  --revakalp-burgundy-velvet: #19070D;
+  --revakalp-gold: #D4AF63;
+  --revakalp-gold-highlight: #F1D889;
+  --revakalp-gold-bright: #FFF0B9;
+  --revakalp-gold-antique: #A8762C;
+  --revakalp-bronze: #7D551A;
+  --revakalp-ivory: #F7F1E5;
+  --revakalp-ivory-warm: #EFE4D0;
+  --revakalp-ink: #1A1718;
+  --revakalp-body-font: 'Inter', Arial, sans-serif;
+  --revakalp-heading-font: 'EB Garamond', Georgia, serif;
+}
+
+html,
+body {
+  font-family: var(--revakalp-body-font);
+  background-color: var(--revakalp-burgundy-deep);
+  color: var(--revakalp-ivory);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Logo usage: retain aspect ratio; never stretch */
+.revakalp-logo {
+  display: block;
+  width: min(100%, 280px);
+  height: auto;
+  object-fit: contain;
+}
+
+.revakalp-logo--hero {
+  width: min(100%, 540px);
+}
+
+/* Keyframes */
+@keyframes rk-reveal-up {
+  0% {
+    opacity: 0;
+    transform: translateY(16px);
+    filter: blur(4px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes rk-frame-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.985);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes rk-thread-expand {
+  0% {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
+@keyframes rk-gold-shimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes rk-orb-drift {
+  0%,
+  100% {
+    transform: translate3d(-50%, -50%, 0) scale(1);
+    opacity: 0.65;
+  }
+  50% {
+    transform: translate3d(-48%, -52%, 0) scale(1.08);
+    opacity: 0.9;
+  }
+}
+
+@keyframes rk-pulse-ring {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  70% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+
+@keyframes rk-btn-sheen {
+  0% {
+    transform: translateX(-130%) skewX(-20deg);
+  }
+  100% {
+    transform: translateX(230%) skewX(-20deg);
+  }
+}
+
+@keyframes rk-check-draw {
+  0% {
+    stroke-dashoffset: 32;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Animation Utilities */
+.rk-reveal {
+  opacity: 0;
+  animation: rk-reveal-up 0.95s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: var(--rk-delay, 0ms);
+  will-change: opacity, transform, filter;
+}
+
+.rk-frame-animate {
+  opacity: 0;
+  animation: rk-frame-in 1.1s cubic-bezier(0.22, 1, 0.36, 1) 80ms forwards;
+}
+
+.rk-thread-animate {
+  opacity: 0;
+  transform-origin: center;
+  animation: rk-thread-expand 1s cubic-bezier(0.22, 1, 0.36, 1) var(--rk-delay, 460ms) forwards;
+}
+
+.rk-gold-text {
+  background-image: linear-gradient(
+    110deg,
+    #d4af63 0%,
+    #fff0b9 28%,
+    #f1d889 48%,
+    #a8762c 68%,
+    #fff0b9 86%,
+    #d4af63 100%
+  );
+  background-size: 240% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: rk-gold-shimmer 9s ease-in-out infinite;
+}
+
+.rk-burgundy-shimmer-text {
+  background-image: linear-gradient(
+    110deg,
+    #38131e 0%,
+    #7d551a 30%,
+    #38131e 55%,
+    #a8762c 76%,
+    #38131e 100%
+  );
+  background-size: 240% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: rk-gold-shimmer 10s ease-in-out infinite;
+}
+
+.rk-orb {
+  animation: rk-orb-drift 16s ease-in-out infinite;
+}
+
+.rk-pulse-ring {
+  animation: rk-pulse-ring 2.6s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+.rk-btn-sheen::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  width: 45%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.38) 50%,
+    transparent 100%
+  );
+  transform: translateX(-130%) skewX(-20deg);
+  pointer-events: none;
+}
+
+.rk-btn-sheen:hover::after {
+  animation: rk-btn-sheen 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.rk-check-path {
+  stroke-dasharray: 32;
+  stroke-dashoffset: 32;
+  animation: rk-check-draw 0.55s cubic-bezier(0.22, 1, 0.36, 1) 120ms forwards;
+}
+
+.rk-grain {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.032;
+  mix-blend-mode: overlay;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rk-reveal,
+  .rk-frame-animate,
+  .rk-thread-animate {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    animation: none !important;
+  }
+
+  .rk-gold-text,
+  .rk-burgundy-shimmer-text,
+  .rk-orb,
+  .rk-pulse-ring,
+  .rk-btn-sheen:hover::after {
+    animation: none !important;
+  }
+
+  .rk-check-path {
+    stroke-dashoffset: 0 !important;
+    animation: none !important;
+  }
+}
